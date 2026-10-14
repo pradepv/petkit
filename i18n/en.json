@@ -1,0 +1,451 @@
+{
+  "error": {
+    "image_alt": "Page not found illustration"
+  },
+  "common": {
+    "alt_image": "Image",
+    "loader": "Loading",
+    "continue_shopping_btn": "Continue Shopping",
+    "offer": "% off",
+    "skip_to_content": "Skip to content"
+  },
+  "cookie_bar": {
+    "accept": "Accept",
+    "decline": "Decline"
+  },
+  "sections": {
+    "header_announcement_bar": {
+      "close_label": "Close announcement bar"
+    },
+    "hero_banner": {
+      "empty": "No hero content configured."
+    },
+    "shop_now_banner": {
+      "image_alt": "Shop now promotional banner"
+    },
+    "video_stories": {
+      "empty_video": "Add a video",
+      "empty_image": "Add an image",
+      "media_image_alt": "Video story media"
+    }
+  },
+  "blocks": {
+    "accordion": {
+      "empty": "Add accordion rows to display FAQ items."
+    },
+    "carousel": {
+      "empty": "No slides configured.",
+      "aria_slide": "Go to slide {{ number }}"
+    },
+    "carousel_slide": {
+      "empty": "Add text and button blocks to this slide."
+    }
+  },
+  "footer": {
+    "powered_by": "Powered By",
+    "copyright_prefix": "© Copyright 2026",
+    "copyright_suffix": "All Rights Reserved"
+  },
+  "search": {
+    "not_available": "No results found",
+    "no_results": "No products found",
+    "placeholder": "Search"
+  },
+  "pagination": {
+    "per_page": "per page",
+    "previous_btn": "Previous",
+    "next_btn": "Next"
+  },
+  "header": {
+    "sign_in": "Sign In",
+    "sign_up": "Sign Up",
+    "sign_out": "Sign Out",
+    "hello": "Hello",
+    "my_profile": "My Profile",
+    "my_orders": "My Orders",
+    "my_addresses": "My Addresses",
+    "my_wishlist": "My Wishlist",
+    "more": "More",
+    "search": "Search",
+    "search_close": "Close search",
+    "search_placeholder": "What are you looking for?",
+    "search_initial_heading_default": "Trending Now",
+    "search_initial_empty": "Select a collection in header settings to show products.",
+    "search_initial_no_products": "No products found in this collection.",
+    "search_results_for_prefix": "Search results for",
+    "search_no_results": "No Result Found",
+    "search_results_region": "Search results"
+  },
+  "product_details": {
+    "qtyErrorMsg": "Quantity value must be within the Integer range",
+    "quantity": "Quantity",
+    "qty_error": "Quantity must be 1 or more.",
+    "breadcrumb_home": "Home",
+    "available_coupons": "Available coupons"
+  },
+  "product_info": {
+    "reviews_tab": "Reviews ({{ count }})",
+    "no_specifications": "Specifications are not available for this product."
+  },
+  "product_custom_fields": {
+    "cannot_be_empty": "This field is required",
+    "dropdown": {
+      "select_option": "Select an option"
+    },
+    "attachment": {
+      "choose_file": "Choose File",
+      "change_file": "Change File",
+      "remove_file": "Remove file",
+      "maximum_size": "Maximum file size: 20MB",
+      "cannot_be_empty": "Please choose a file"
+    }
+  },
+  "product_list": {
+    "sort_by": "Sort by",
+    "filters": "Filters",
+    "clear_all": "Clear all",
+    "clear": "Clear",
+    "no_products": "No products found.",
+    "reset": "Reset",
+    "apply": "Apply",
+    "sale": "Sale",
+    "save": "Save",
+    "review": "review",
+    "reviews": "reviews"
+  },
+  "reviews_ratings": {
+    "write_btn": "Write a Review",
+    "edit_btn": "Edit Review",
+    "login_btn": "Login to Write a Review",
+    "customer_review": "Customer Review",
+    "customer_reviews": "Customer Reviews",
+    "review_requirement_message": "You need to purchase this product to write a review",
+    "submit_btn": "Submit",
+    "cancel_btn": "Cancel",
+    "no_reviews_message": "No reviews posted yet",
+    "title": "Title",
+    "rate_this": "Rate this",
+    "review": "Review",
+    "avg_rating": "Average Rating",
+    "rating": "Customer Review",
+    "ratings": "Customer Reviews",
+    "name_error_msg": "Title cannot be empty",
+    "rating_error_msg": "Rating cannot be empty",
+    "review_error_msg": "Review cannot be empty",
+    "captcha_error_msg": "Please complete the CAPTCHA verification",
+    "product_items": "Product Items",
+    "how_was_product": "How was the Product?",
+    "review_title_placeholder": "Review Title",
+    "write_review_placeholder": "Write a Review",
+    "verification_code_label": "Type the verification code from the mail",
+    "verification_code_error": "Please enter the verification code"
+  },
+  "blog_layout": {
+    "no_blogs": "No blogs found.",
+    "all_categories": "All",
+    "filter_by_category": "Filter by category"
+  },
+  "cart": {
+    "my_cart": "My Cart",
+    "remove": "Remove",
+    "save_for_later": "Save for later",
+    "price": "Price",
+    "checkout": "Checkout",
+    "subtotal": "Subtotal",
+    "cart_empty_descp": "Your shopping cart is empty",
+    "items": "Items",
+    "quantity": "Quantity",
+    "amount": "Amount",
+    "discount_msg": "You have saved",
+    "shipping_tax_descp": "Shipping and taxes will be calculated at checkout",
+    "download_attachment": "Download attachment"
+  },
+  "blog": {
+    "comments": "Comments",
+    "breadcrumb_home": "Home",
+    "breadcrumb_blogs": "Blogs"
+  },
+  "blog_comments": {
+    "comment": "Leave a Comments",
+    "reply": "Reply",
+    "name": "Name",
+    "email": "Email",
+    "submit_btn": "Submit",
+    "cancel_btn": "Cancel",
+    "prev_btn": "Previous",
+    "next_btn": "Next",
+    "reply_btn": "Reply",
+    "replies_btn": "Replies",
+    "write_comment": "Write a Comment",
+    "post_comment": "Post comment",
+    "comment_error_msg": "Comment cannot be empty",
+    "reply_error_msg": "Reply cannot be empty",
+    "comment_guestbox": "Post as guest user",
+    "reply_guestbox": "Post as guest user",
+    "comment_guestbox_error": "Sign In to post as a user",
+    "reply_guestbox_error": "Sign In to post as a user",
+    "comment_login_btn": "Sign In to Comment",
+    "reply_login_btn": "Sign In to Reply"
+  },
+  "checkout": {
+    "home": "Home",
+    "view_cart": "View Cart",
+    "checkout": "Checkout",
+    "enable_payment_method_label": "Site in Under Construction",
+    "additional_message": "If you are an administrator, kindly check payment gateway options enabled in your organisation.",
+    "blocks": {
+      "common": {
+        "empty_label": "Cannot be empty",
+        "continue_btn": "Continue",
+        "change_btn": "Change",
+        "empty_billing_address": "Please select the billing address",
+        "empty_shipping_address": "Please select the shipping address"
+      },
+      "checkout-steps": {
+        "address": "Address",
+        "dispatch": "Dispatch",
+        "review_order_payment": "Review Order & Make Payment"
+      },
+      "customer-information": {
+        "checkbox_label": "Billing Address is same as Shipping Address"
+      },
+      "shipping-and-billing-information": {
+        "shipping_title": "Shipping Address",
+        "billing_title": "Billing Address",
+        "shipping_billing_title": "Shipping & Billing Address",
+        "first_name": "First Name",
+        "last_name": "Last Name",
+        "email": "Email",
+        "address": "Address",
+        "invalid_email": "Invalid email",
+        "city": "City",
+        "country": "Country",
+        "state_or_province": "State / Province",
+        "zip_code": "ZIP Code",
+        "telephone": "Telephone",
+        "invalid_phone": "Invalid Phone",
+        "state": "Select State",
+        "select_country": "Select Country",
+        "promotional_email_message": "Keep me updated on news and offers.",
+        "select_billing_address_label": "Select a billing address",
+        "select_shipping_address_label": "Select a shipping address",
+        "add_new_address_label": "Add New Address"
+      },
+      "shipping-methods": {
+        "title": "Shipping Method"
+      },
+      "review-order": {
+        "items": "Items",
+        "quantity": "Quantity",
+        "subtotal": "Subtotal"
+      },
+      "payment-options": {
+        "title": "Payment Options",
+        "make_payment": "Make Payment",
+        "complete_order": "Complete Order"
+      },
+      "coupon": {
+        "apply_btn": "Apply",
+        "applied": "Coupon applied",
+        "order_summary": "Order Summary",
+        "show_details": "Show Details",
+        "hide_details": "Hide Details",
+        "remove": "Remove",
+        "code": "Code",
+        "service_charge": "Service Charge",
+        "offline_payment": "offline payment",
+        "total": "Total",
+        "coupon": "Coupon",
+        "tax": "Tax"
+      }
+    }
+  },
+  "orders": {
+    "order_id": "Order ID",
+    "placed_on": "Placed on",
+    "total": "Total",
+    "order_status": "Order Status",
+    "amount": "Amount",
+    "personalized_name": "Personalized name",
+    "price": "Price",
+    "quantity": "Quantity",
+    "payment_info": "Payment Information",
+    "subtotal": "Subtotal",
+    "tax": "Tax",
+    "payment_method": "Payment Method",
+    "shipping_destination": "Shipping Destination",
+    "shipping": "Shipping",
+    "cancellation_descp": "Please contact us for cancellations."
+  },
+  "payment-status": {
+    "continue_btn": "Continue Shopping",
+    "blocks": {
+      "payment-confirmation": {
+        "order_id": "Order ID",
+        "bill_amount": "Bill Amount",
+        "payment_method": "Payment Method",
+        "success_congratulations_msg": "Congratulations",
+        "success_msg": "Your order has been confirmed.",
+        "thankyou_msg": "Thank you for shopping with us",
+        "success_image_alt": "Payment successful"
+      },
+      "payment-failure": {
+        "retry_payment_btn": "Retry Payment",
+        "payment_detected_msg": "If the amount has been detected from your account",
+        "click_here": "Click here",
+        "transaction_failed_msg": "Transaction failed",
+        "failure_image_alt": "Payment failed"
+      }
+    }
+  },
+  "accounts": {
+    "common": {
+      "required_msg": "This field is required",
+      "cancel_btn": "Cancel",
+      "save": "Save",
+      "quantity": "Quantity",
+      "menu": "Menu",
+      "hi": "Hi",
+      "my_profile": "My Profile",
+      "my_quotes": "My Quotes",
+      "my_address": "My Address",
+      "my_address_list": "My Addresses",
+      "my_orders": "My Orders",
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "city": "City",
+      "country": "Country",
+      "state": "State",
+      "address": "Address"
+    },
+    "quotes": {
+      "title": "My Quotes",
+      "filter_all": "All",
+      "filter_submitted": "In Progress",
+      "filter_converted": "Processed",
+      "filter_declined": "Void",
+      "empty": "You don't have any quotes.",
+      "quote_request_no": "Quote Request No",
+      "date": "Date",
+      "details": "Details",
+      "quote_details_title": "Quote Details",
+      "quote_request_details_title": "Quote Request Details",
+      "placed_on": "Placed on",
+      "quote_details_button": "Quote Details",
+      "product_items": "Product Items",
+      "checkout": "Checkout",
+      "comments": "Comments",
+      "message": "Message",
+      "enter_comments": "Enter your Comments",
+      "save": "Save",
+      "ordered": "Ordered"
+    },
+    "account_address": {
+      "new_address": "Add New Address",
+      "no_address": "No Addresses to show",
+      "default": "Default",
+      "select_country": "Select country",
+      "select_state": "Select state",
+      "zip_code": "Zip Code",
+      "phone_number": "Phone Number",
+      "make_default_address": "Make this my default address",
+      "save_btn": "Save",
+      "update_btn": "Update Address"
+    },
+    "order_status": {
+      "cancel_txt": "Cancel Order",
+      "return_txt": "Return Order",
+      "reason_label": "Reason for cancellation",
+      "choose": "Choose reason",
+      "mistake_order": "Ordered it by mistake",
+      "order_delay": "Order would not arrive on time",
+      "high_shipping_charge": "Shipping charges too high",
+      "high_product_price": "Product price is too high",
+      "found_cheaper_elsewhere": "Found it cheaper elsewhere",
+      "change_address": "Need to change shipping address/shipping method",
+      "select_reason": "Select reason",
+      "reason_entry": "Enter your reason",
+      "reason": "Reason",
+      "return_pending": "Pending",
+      "return_approved": "Approved",
+      "return_accepted": "Accepted",
+      "return_declined": "Declined",
+      "return_closed": "Closed",
+      "return_refunded": "Refunded",
+      "refund_request": "refund request was made on",
+      "cancellation_id": "with cancellation ID",
+      "submit_btn": "Submit",
+      "other": "Other"
+    },
+    "account_order": {
+      "ongoing_orders": "Ongoing Orders",
+      "past_orders": "Past Orders",
+      "empty_ongoing": "You don't have any ongoing orders.",
+      "empty_past": "You don't have any past orders.",
+      "last_month": "Last Month",
+      "last_three_months": "Last 3 months",
+      "last_six_months": "Last 6 months",
+      "last_year": "Last Year",
+      "placed_on": "Placed on",
+      "total": "Total",
+      "buy_again": "Buy Again",
+      "cancel": "Cancel",
+      "return": "Return",
+      "order_details": "Order Details",
+      "more_items": "more item...",
+      "status_reached": "Reached",
+      "status_completed": "Completed"
+    },
+    "account_profile": {
+      "date_of_birth": "Date Of Birth",
+      "gender": "Gender",
+      "email": "Email",
+      "phone_number": "Phone Number",
+      "company_name": "Company Name",
+      "job_title": "Job Title",
+      "zip_code": "ZIP Code",
+      "receive_promotional_emails": "Receive promotional emails",
+      "newsletter_opt_in": "Subscribe to our newsletter to receive updates and special offers.",
+      "change_password": "Change Password",
+      "old_password": "Old Password",
+      "new_password": "New Password",
+      "confirm_password": "Confirm New Password",
+      "submit_btn": "Submit",
+      "reset_btn": "Reset"
+    },
+    "account_wishlist": {
+      "title": "Wishlist",
+      "no_products_found": "There are no products in your wishlist"
+    },
+    "account_order_details": {
+      "order_details": "Order Details",
+      "request_cancellation_btn": "Request Cancellation",
+      "print_invoice_btn": "Print Invoice",
+      "return_btn": "Return",
+      "delivered_on": "Delivered on",
+      "shipping_address": "Shipping Address",
+      "payment_information": "Payment Information",
+      "sub_total": "Subtotal",
+      "shipping_msg": "Shipping (Standard Shipping / 3-5 business days)",
+      "tax": "Tax",
+      "total": "Total",
+      "payment_method": "Payment Method",
+      "items": "Items",
+      "cancel_request_msg": "You have requested to cancel the item",
+      "amount": "Amount",
+      "check_status": "Check Status"
+    },
+    "auth": {
+      "signup_help": "Don't have an account?",
+      "sign_up": "Sign Up",
+      "forgot_password_short": "Forgot Password",
+      "otp_placeholder": "Enter one-time password",
+      "otp_header": "Enter one-time password",
+      "verify_signup_title": "Verify your sign-up",
+      "resend_otp": "Resend OTP",
+      "verify": "Verify",
+      "already_have_account": "Already have an account?",
+      "sign_in": "Sign In"
+    }
+  }
+}

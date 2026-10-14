@@ -1,0 +1,21 @@
+{
+  "layout": "theme",
+  "sections": {
+    "main": {
+      "type": "product-list",
+      "settings": {
+        "page_type": "category",
+        "heading_alignment": "left",
+        "desktop_columns": "3",
+        "show_secondary_image": true,
+        "mobile_padding_top": 16,
+        "mobile_padding_bottom": 60,
+        "desktop_padding_top": 16,
+        "desktop_padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
