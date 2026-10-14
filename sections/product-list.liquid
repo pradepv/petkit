@@ -1,0 +1,789 @@
+<script type="module" src="{{ 'category-page-345229870250114.js' | asset_url }}" defer></script>
+{% liquid
+  assign wishlist_enabled = false
+  if store.customer_portal.enabled and store.preferences.is_wishlist_enabled
+    assign wishlist_enabled = true
+  endif
+%}
+{% if wishlist_enabled %}
+<script type="module" src="{{ 'product-wishlist-943862380239332.js' | asset_url }}" defer></script>
+{% endif %}
+
+{% liquid
+  assign section_settings = section.settings
+  assign page_type = category
+  assign filter_objects = page_type.filters
+  assign page_title = page_type.name
+  assign product_count = page_type.products.size
+  assign sort_object = page_type.sort
+  assign sort_param_name = sort_object.param_name
+  assign active_filter_count = 0
+  assign heading_align = section_settings.heading_alignment.value | default: section_settings.heading_alignment | default: 'left'
+  assign desktop_columns = section_settings.desktop_columns.value | default: section_settings.desktop_columns | default: '3'
+  assign show_secondary_image = section_settings.show_secondary_image
+%}
+
+{% for filter_object in filter_objects %}
+  {% for filter_value in filter_object.values %}
+    {% if filter_value.active %}
+      {% assign active_filter_count = active_filter_count | plus: 1 %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+
+{% style %}
+  #section-{{ section.id }} {
+    padding-top: {{ section.settings.mobile_padding_top }}px;
+    padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+    --pl-columns-desktop: {{ desktop_columns }};
+  }
+  @media (min-width: 768px) {
+    #section-{{ section.id }} {
+      padding-top: {{ section.settings.desktop_padding_top }}px;
+      padding-bottom: {{ section.settings.desktop_padding_bottom }}px;
+    }
+  }
+
+  /* ---------- layout: sidebar + results ---------- */
+  #section-{{ section.id }} .pl-title {
+    text-align: {{ heading_align }};
+    color: var(--color-primary);
+    font-weight: 600;
+    line-height: 1.1;
+    text-transform: uppercase;
+    font-size: 1.75rem;
+  }
+  @media (min-width: 768px) {
+    #section-{{ section.id }} .pl-title { font-size: 2.5rem; }
+  }
+  #section-{{ section.id }} .pl-layout {
+    display: block;
+    margin-top: 1.5rem;
+  }
+  #section-{{ section.id }} .pl-sidebar { display: none; }
+  #section-{{ section.id }} .pl-main { min-width: 0; }
+  @media (min-width: 1000px) {
+    #section-{{ section.id }} .pl-layout {
+      display: flex;
+      align-items: flex-start;
+      gap: 2.5rem;
+      margin-top: 2rem;
+    }
+    #section-{{ section.id }} .pl-sidebar {
+      display: block;
+      flex: 0 0 240px;
+      width: 240px;
+      position: sticky;
+      top: calc(var(--header-height, 80px) + 16px);
+      max-height: calc(100vh - var(--header-height, 80px) - 32px);
+      overflow-y: auto;
+    }
+    #section-{{ section.id }} .pl-main { flex: 1 1 0%; }
+  }
+
+  /* ---------- sidebar accordions ---------- */
+  #section-{{ section.id }} .pl-facet {
+    border-bottom: 1px solid var(--color-border);
+  }
+  #section-{{ section.id }} .pl-facet summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--color-heading);
+  }
+  #section-{{ section.id }} .pl-facet summary::-webkit-details-marker { display: none; }
+  #section-{{ section.id }} .pl-facet summary svg { transition: transform 0.2s ease; }
+  #section-{{ section.id }} .pl-facet[open] summary svg { transform: rotate(180deg); }
+  #section-{{ section.id }} .pl-facet summary:focus-visible { outline: auto; }
+  #section-{{ section.id }} .pl-facet-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0 0 1.25rem;
+  }
+  #section-{{ section.id }} .filter-option-label:has(input:focus-visible) .filter-checkbox-visual {
+    outline: auto;
+  }
+
+  /* ---------- top bar ---------- */
+  #section-{{ section.id }} .pl-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  #section-{{ section.id }} .pl-filters-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-heading);
+  }
+  #section-{{ section.id }} .pl-filters-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 42px;
+    padding: 0 1rem;
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+    background: transparent;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  #section-{{ section.id }} .pl-filters-label-desktop { display: none; }
+  #section-{{ section.id }} .pl-sort-desktop { display: none; }
+  @media (min-width: 1000px) {
+    #section-{{ section.id }} .pl-filters-btn { display: none; }
+    #section-{{ section.id }} .pl-filters-label-desktop { display: inline-flex; }
+    #section-{{ section.id }} .pl-sort-desktop { display: inline-flex; }
+    #section-{{ section.id }} .pl-sort-mobile { display: none; }
+  }
+  #section-{{ section.id }} .filter-trigger svg { transition: transform 0.2s ease; }
+  #section-{{ section.id }} .filter-trigger.filter-btn-open svg { transform: rotate(180deg); }
+  #section-{{ section.id }} .pl-sort-desktop {
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-heading);
+    white-space: nowrap;
+  }
+  #section-{{ section.id }} .sort-dropdown-item:hover {
+    background-color: #FDF2F8;
+    color: var(--color-primary);
+  }
+
+  /* ---------- product grid ---------- */
+  #section-{{ section.id }} .pl-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem 0.75rem;
+  }
+  @media (min-width: 700px) {
+    #section-{{ section.id }} .pl-grid { gap: 2.5rem 1.25rem; }
+  }
+  @media (min-width: 1200px) {
+    #section-{{ section.id }} .pl-grid {
+      grid-template-columns: repeat(var(--pl-columns-desktop), minmax(0, 1fr));
+      gap: 3rem 1.5rem;
+    }
+  }
+
+  /* ---------- product card ---------- */
+  #section-{{ section.id }} .pl-card { display: flex; flex-direction: column; height: 100%; }
+  #section-{{ section.id }} .pl-card-figure {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #fff;
+  }
+  #section-{{ section.id }} .pl-card-figure a { display: block; width: 100%; height: 100%; }
+  #section-{{ section.id }} .pl-card-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  #section-{{ section.id }} .pl-card-img-secondary { opacity: 0; }
+  @media (hover: hover) {
+    #section-{{ section.id }} .pl-card:hover .pl-card-img-secondary { opacity: 1; }
+  }
+  #section-{{ section.id }} .pl-badge {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 10;
+    padding: 0.25rem 0.625rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  @media (min-width: 768px) {
+    #section-{{ section.id }} .pl-badge { top: 0.75rem; left: 0.75rem; font-size: 0.75rem; }
+  }
+  #section-{{ section.id }} .pl-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    flex-grow: 1;
+    padding: 0.75rem 0.125rem 0;
+  }
+  #section-{{ section.id }} .pl-card-tagline {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  #section-{{ section.id }} .pl-card-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.8125rem;
+  }
+  #section-{{ section.id }} .pl-card-title {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--color-heading);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  @media (min-width: 768px) {
+    #section-{{ section.id }} .pl-card-title { font-size: 1rem; }
+  }
+  #section-{{ section.id }} .pl-card-price {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    margin-top: auto;
+    font-size: 0.9375rem;
+  }
+  #section-{{ section.id }} .pl-card-price .pl-price-now { font-weight: 600; color: var(--color-heading); }
+  #section-{{ section.id }} .pl-card-price .pl-price-now.is-sale { color: #C0392B; }
+  #section-{{ section.id }} .pl-card-price s { color: var(--color-text-muted); font-size: 0.875rem; }
+{% endstyle %}
+
+<div id="section-{{ section.id }}" class="w-full bg-white" data-category-page data-sort-param="{{ sort_param_name }}">
+  <script class="filterData" type="application/json">{{ filter_objects | json }}</script>
+
+  <div class="w-[90%] page-max-width mx-auto pt-[28px] md:pt-[50px]">
+    <h1 class="pl-title primary-font">{{ page_title | escape }}</h1>
+
+    <div class="pl-layout">
+
+      {%- comment -%} Desktop sidebar filters (accordion). Changes apply instantly via category-page JS. {%- endcomment -%}
+      {% if filter_objects.size > 0 %}
+      <aside class="pl-sidebar" aria-label="{{ 'product_list.filters' | t | default: 'Filters' }}">
+        {% for filter_object in filter_objects %}
+          {% assign group_label = filter_object.label | default: filter_object.name | capitalize | escape %}
+          {% assign group_label_id = 'sidebar-filter-label-' | append: forloop.index %}
+          {% assign group_has_active = false %}
+          {% for fv in filter_object.values %}
+            {% if fv.active %}{% assign group_has_active = true %}{% break %}{% endif %}
+          {% endfor %}
+          <details class="pl-facet" {% if group_has_active or forloop.first %}open{% endif %}>
+            <summary>
+              <span id="{{ group_label_id }}">{{ group_label }}</span>
+              <svg class="w-3 h-3" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </summary>
+            <div role="{% if filter_object.input_type == 'radio' %}radiogroup{% else %}group{% endif %}" aria-labelledby="{{ group_label_id }}" class="pl-facet-list">
+              {% for filter_value in filter_object.values %}
+                {% assign input_id = 'sidebar-filter-' | append: forloop.parentloop.index | append: '-' | append: forloop.index %}
+                {% liquid
+                  assign display_name = filter_value.name
+                  assign color_hex = ''
+                  if filter_value.name contains '#'
+                    assign color_parts = filter_value.name | split: '#'
+                    assign display_name = color_parts[0]
+                    assign color_hex = '#' | append: color_parts[1]
+                  endif
+                %}
+                <label for="{{ input_id }}" class="filter-option-label flex items-center justify-between gap-3 cursor-pointer text-sm leading-tight body-text-color">
+                  <span class="flex items-center gap-2 min-w-0">
+                    {% if color_hex != blank %}
+                      <span class="w-3.5 h-3.5 rounded-full flex-shrink-0" style="background-color: {{ color_hex }};" aria-hidden="true"></span>
+                    {% endif %}
+                    <span class="truncate">{{ display_name | strip | escape }}</span>
+                  </span>
+                  <span class="filter-checkbox-visual w-5 h-5 border flex items-center justify-center flex-shrink-0" style="border-color: var(--color-heading);">
+                    <input
+                      id="{{ input_id }}"
+                      data-filter-input
+                      data-control="sidebar"
+                      data-input-type="{{ filter_object.input_type }}"
+                      data-param="{{ filter_value.param_name }}"
+                      type="{% if filter_object.input_type == 'radio' %}radio{% else %}checkbox{% endif %}"
+                      {% if filter_object.input_type == 'radio' %}name="sidebar-{{ filter_value.param_name }}"{% endif %}
+                      value="{{ filter_value.value }}"
+                      class="sr-only"
+                      {% if filter_value.active %}checked{% endif %}>
+                    <svg class="w-3 h-3 {% if filter_value.active %}block{% else %}hidden{% endif %}" style="color: var(--color-primary);" data-check-icon viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                      <path d="M1 5L4.5 8.5L11 1" stroke="currentColor" stroke-width="1.6"/>
+                    </svg>
+                  </span>
+                </label>
+              {% endfor %}
+            </div>
+          </details>
+        {% endfor %}
+      </aside>
+      {% endif %}
+
+      <div class="pl-main">
+        <div class="pl-topbar">
+          <div class="flex items-center">
+            <span class="pl-filters-label pl-filters-label-desktop">
+              {% render "icon-filter" %}
+              {{ "product_list.filters" | t | default: 'Filters' }}
+            </span>
+            <button
+              type="button"
+              class="pl-filters-btn"
+              data-mobile-filter-open
+              aria-label="{{ 'product_list.filters' | t | default: 'Filters' }}"
+              aria-haspopup="dialog"
+              aria-expanded="false"
+              aria-controls="mobile-filter-panel">
+              {% render "icon-filter" %}
+              <span>{{ "product_list.filters" | t | default: 'Filters' }}</span>
+              {% if active_filter_count > 0 %}<span aria-hidden="true">({{ active_filter_count }})</span>{% endif %}
+            </button>
+          </div>
+
+          <div class="relative flex justify-end">
+            <button
+              type="button"
+              id="sort-dropdown-trigger"
+              data-dropdown-trigger="sort-dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              aria-controls="sort-dropdown"
+              class="filter-trigger pl-sort-desktop">
+              {%- assign active_sort_option = sort_object.selected_option | default: sort_object.options[0] -%}
+              <span data-sort-trigger-label class="whitespace-nowrap">
+                {{- "product_list.sort_by" | t -}}
+                {%- if active_sort_option -%}
+                  {{ ' : ' }}{{ active_sort_option.name | escape }}
+                {%- endif -%}
+              </span>
+              <svg class="w-3 h-3" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </button>
+
+            <ul id="sort-dropdown" role="menu" aria-labelledby="sort-dropdown-trigger" class="hidden absolute right-0 top-full mt-4 z-30 shadow-lg w-[220px] bg-white border" style="border-color: var(--color-primary);">
+              {% for option in sort_object.options %}
+                {% assign is_selected_sort = false %}
+                {% if sort_object.selected_option and sort_object.selected_option.value == option.value %}
+                  {% assign is_selected_sort = true %}
+                {% elsif sort_object.selected_option == blank and forloop.first %}
+                  {% assign is_selected_sort = true %}
+                {% endif %}
+                <li role="none">
+                  <button
+                    type="button"
+                    role="menuitemradio"
+                    aria-checked="{% if is_selected_sort %}true{% else %}false{% endif %}"
+                    data-sort-option
+                    value="{{ option.value }}"
+                    class="sort-dropdown-item w-full text-left px-5 py-3 text-sm transition-colors duration-200"
+                    style="color: {% if is_selected_sort %}var(--color-primary){% else %}var(--color-heading){% endif %};">
+                    {{ option.name | escape }}
+                  </button>
+                </li>
+              {% endfor %}
+            </ul>
+
+            <button
+              type="button"
+              id="mobile-sort-trigger"
+              data-mobile-sort-open
+              aria-haspopup="dialog"
+              aria-expanded="false"
+              aria-controls="mobile-sort-panel"
+              class="pl-filters-btn pl-sort-mobile">
+              {{ "product_list.sort_by" | t }}
+            </button>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div data-filter-loader class="hidden absolute inset-0 z-20 bg-white bg-opacity-70 flex items-center justify-center">
+            <span class="h-10 w-10 animate-spin text-[var(--color-primary)]">{% render "icon-spinner" %}</span>
+          </div>
+          <div id="filterableResults">
+            {% if active_filter_count > 0 %}
+              <div class="mt-5 flex flex-wrap gap-3">
+                {% for filter_object in filter_objects %}
+                  {% for filter_value in filter_object.values %}
+                    {% if filter_value.active %}
+                      {% liquid
+                        assign chip_is_color = false
+                        assign chip_display_name = filter_value.name
+                        assign chip_color_hex = ''
+                        if filter_value.name contains '#'
+                          assign chip_parts = filter_value.name | split: '#'
+                          assign chip_display_name = chip_parts[0] | strip
+                          assign chip_color_hex = '#' | append: chip_parts[1]
+                          assign chip_is_color = true
+                        endif
+                      %}
+                      <button
+                        type="button"
+                        data-remove-chip
+                        data-param="{{ filter_value.param_name }}"
+                        data-value="{{ filter_value.value }}"
+                        aria-label="Remove filter: {{ chip_display_name | escape }}"
+                        class="inline-flex items-center gap-2 px-3 h-[34px] border text-xs"
+                        style="border-color: var(--color-heading); background-color: white; color: var(--color-primary);">
+                        {% if chip_is_color %}
+                          <span aria-hidden="true" class="w-3 h-3 rounded-full border border-color flex-shrink-0" style="background-color: {{ chip_color_hex }};"></span>
+                        {% endif %}
+                        <span>{{ chip_display_name | escape }}</span>
+                        <span aria-hidden="true" class="w-4 h-4 rounded-full text-white flex items-center justify-center text-[10px]" style="background-color: var(--color-primary);">x</span>
+                      </button>
+                    {% endif %}
+                  {% endfor %}
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            <div id="productList" class="mt-6 md:mt-8">
+              {% if product_count == 0 %}
+                <p class="text-center text-lg py-16" style="color: var(--color-primary);">{{ "product_list.no_products" | t }}</p>
+              {% else %}
+                {% if wishlist_enabled %}
+                <product-wishlist class="pl-grid">
+                {% else %}
+                <div class="pl-grid">
+                {% endif %}
+                  {% for perProduct in page_type.products %}
+                    {%- liquid
+                      assign featured_image = perProduct.cover_media
+                      assign product_image = featured_image | image_url
+                      assign product_url = perProduct.url
+                      assign secondary_image = perProduct.media[1]
+                      assign secondary_image_url = secondary_image | image_url
+                      assign first_variant = perProduct.variants.first
+                      assign compare_price = first_variant.label_price | default: 0 | plus: 0
+                      assign review_count = perProduct.review_count | default: 0 | plus: 0
+                      assign avg_rating = perProduct.average_rating | default: 0 | plus: 0
+                      assign has_range = false
+                      if perProduct.price_min != perProduct.price_max
+                        assign has_range = true
+                      endif
+                      assign show_compare = false
+                      if compare_price > 0 and has_range == false
+                        assign show_compare = true
+                      endif
+                      if product_image == '?' or product_image == ''
+                        assign product_image = 'no-image-59606643991319.webp' | asset_url
+                      endif
+                    -%}
+                    <div data-product class="w-full h-full">
+                      <div class="pl-card product-card product-card-color group" style="color: var(--color-primary);">
+                        <div class="pl-card-figure media media-color">
+                          {% if perProduct.on_sale or show_compare %}
+                            <div class="pl-badge btn-primary btn-primary-color">
+                              {%- if show_compare and first_variant.discount_percentage != blank -%}
+                                {{ "product_list.save" | t | default: 'Save' }} {{ first_variant.discount_percentage }}%
+                              {%- else -%}
+                                {{ "product_list.sale" | t | default: 'Sale' }}
+                              {%- endif -%}
+                            </div>
+                          {% endif %}
+
+                          {% if store.customer_portal.enabled and store.preferences.is_wishlist_enabled and perProduct.variants.size == 1 %}
+                            {% render 'wishlist-container', perProduct: perProduct %}
+                          {% endif %}
+
+                          <a href="{{ product_url }}" aria-label="{{ perProduct.title | escape }}">
+                            <picture class="block w-full h-full">
+                              {% render 'image-resolutions', firstImage: featured_image %}
+                              <img
+                                src="{{ product_image }}"
+                                alt="{{ perProduct.title | escape }}"
+                                class="pl-card-img pl-card-img-primary"
+                                loading="lazy">
+                            </picture>
+                            {% if show_secondary_image and secondary_image_url != '?' and secondary_image_url != blank %}
+                              <img
+                                src="{{ secondary_image_url }}"
+                                alt=""
+                                aria-hidden="true"
+                                class="pl-card-img pl-card-img-secondary"
+                                loading="lazy">
+                            {% endif %}
+                          </a>
+
+                          {% render 'quick-view', perProduct: perProduct %}
+                        </div>
+
+                        <a href="{{ product_url }}" class="pl-card-info">
+                          {% if perProduct.short_description != blank %}
+                            <span class="pl-card-tagline">{{ perProduct.short_description | strip_html }}</span>
+                          {% endif %}
+
+                          <div class="pl-card-rating">
+                            <div class="flex gap-0.5 flex-shrink-0" role="img" aria-label="{{ avg_rating }} / 5">
+                              {% for i in (1..5) %}
+                                {% if i <= avg_rating %}
+                                  {% render 'icon-star-filled' %}
+                                {% else %}
+                                  {% render 'icon-star-empty' %}
+                                {% endif %}
+                              {% endfor %}
+                            </div>
+                            {% if review_count > 0 %}
+                              <span class="body-text-color">{{ review_count }} {% if review_count == 1 %}{{ "product_list.review" | t | default: 'review' }}{% else %}{{ "product_list.reviews" | t | default: 'reviews' }}{% endif %}</span>
+                            {% endif %}
+                          </div>
+
+                          <p class="pl-card-title">{{ perProduct.title | escape }}</p>
+
+                          <div class="pl-card-price">
+                            {% if has_range %}
+                              <span class="pl-price-now">{{ perProduct.price_min_formatted }} - {{ perProduct.price_max_formatted }}</span>
+                            {% else %}
+                              <span class="pl-price-now{% if show_compare %} is-sale{% endif %}">{{ perProduct.price_min_formatted }}</span>
+                              {% if show_compare %}
+                                <s>{{ first_variant.label_price_formatted }}</s>
+                              {% endif %}
+                            {% endif %}
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  {% endfor %}
+                {% if wishlist_enabled %}
+                </product-wishlist>
+                {% else %}
+                </div>
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div data-mobile-overlay class="hidden fixed inset-x-0 bottom-0 bg-black/30 z-40" style="top: var(--announcement-bar-height, 0px);" aria-hidden="true"></div>
+  <aside id="mobile-filter-panel" data-mobile-panel role="dialog" aria-modal="true" aria-labelledby="mobile-filter-panel-title" aria-hidden="true" tabindex="-1" style="top: var(--announcement-bar-height, 0px); height: calc(100% - var(--announcement-bar-height, 0px));" class="fixed left-0 w-full sm:w-[84%] sm:max-w-[420px] z-50 transform -translate-x-full transition-transform duration-300 overflow-y-auto bg-white">
+    <div class="px-5 py-4 flex items-center justify-between border-b" style="border-color: var(--color-border);">
+      <h3 id="mobile-filter-panel-title" class="text-lg font-semibold" style="color: var(--color-heading);">{{ "product_list.filters" | t }}</h3>
+      <button type="button" data-mobile-filter-close aria-label="{{ 'product_list.close_filters' | t | default: 'Close filters' }}" style="color: var(--color-primary);">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <path d="M4 4L16 16M16 4L4 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="px-5 py-2">
+      {% for filter_object in filter_objects %}
+        {% assign mobile_group_param_name = filter_object.param_name %}
+        {% if mobile_group_param_name == blank and filter_object.values.size > 0 %}
+          {% assign mobile_group_param_name = filter_object.values[0].param_name %}
+        {% endif %}
+        {% assign mobile_group_label = filter_object.label | default: filter_object.name | capitalize | escape %}
+        {% assign mobile_group_label_id = 'mobile-filter-group-label-' | append: forloop.index %}
+
+        <div class="py-4 {% unless forloop.last %}border-b{% endunless %}" style="border-color: var(--color-border);">
+          <div class="flex items-center justify-between mb-3">
+            <p id="{{ mobile_group_label_id }}" class="text-sm font-semibold" style="color: var(--color-heading);">{{ mobile_group_label }}</p>
+            <button type="button" class="text-xs body-text-color hover:underline" data-mobile-clear-group="{{ mobile_group_param_name }}" aria-label="{{ 'product_list.clear' | t }} {{ mobile_group_label }}">{{ "product_list.clear" | t }}</button>
+          </div>
+
+          <div role="{% if filter_object.input_type == 'radio' %}radiogroup{% else %}group{% endif %}" aria-labelledby="{{ mobile_group_label_id }}" class="flex flex-col gap-3">
+            {% for filter_value in filter_object.values %}
+              {% assign mobile_input_id = 'mobile-filter-' | append: forloop.parentloop.index | append: '-' | append: forloop.index %}
+              {% liquid
+                assign m_is_color_value = false
+                assign m_display_name = filter_value.name
+                assign m_color_hex = ''
+                if filter_value.name contains '#'
+                  assign m_color_parts = filter_value.name | split: '#'
+                  assign m_display_name = m_color_parts[0]
+                  assign m_color_hex = '#' | append: m_color_parts[1]
+                  assign m_is_color_value = true
+                endif
+              %}
+              <label for="{{ mobile_input_id }}" class="filter-option-label flex items-center justify-between text-sm cursor-pointer body-text-color">
+                <span class="flex items-center gap-2 min-w-0">
+                  {% if m_is_color_value %}
+                    <span class="w-3.5 h-3.5 rounded-full flex-shrink-0" style="background-color: {{ m_color_hex }};" aria-hidden="true"></span>
+                  {% endif %}
+                  <span class="truncate">{{ m_display_name | strip | escape }}</span>
+                </span>
+                <span class="filter-checkbox-visual w-5 h-5 border flex items-center justify-center flex-shrink-0" style="border-color: var(--color-heading);">
+                  <input
+                    id="{{ mobile_input_id }}"
+                    data-filter-input
+                    data-control="mobile"
+                    data-input-type="{{ filter_object.input_type }}"
+                    data-param="{{ filter_value.param_name }}"
+                    type="{% if filter_object.input_type == 'radio' %}radio{% else %}checkbox{% endif %}"
+                    {% if filter_object.input_type == 'radio' %}name="mobile-{{ filter_value.param_name }}"{% endif %}
+                    value="{{ filter_value.value }}"
+                    class="sr-only"
+                    {% if filter_value.active %}checked{% endif %}>
+                  <svg class="w-3 h-3 {% if filter_value.active %}block{% else %}hidden{% endif %}" style="color: var(--color-primary);" data-check-icon viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                    <path d="M1 5L4.5 8.5L11 1" stroke="currentColor" stroke-width="1.6"/>
+                  </svg>
+                </span>
+              </label>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="sticky bottom-0 border-t px-5 py-4 flex items-center gap-3 bg-white" style="border-color: var(--color-border);">
+      <button type="button" data-mobile-reset
+        class="btn-secondary btn-secondary-color btn-secondary-hover flex-1 inline-flex items-center justify-center h-10 text-sm font-medium leading-none text-center">
+        {{ "product_list.reset" | t }}
+      </button>
+      <button type="button" data-mobile-apply
+        class="btn-primary btn-primary-color btn-primary-hover flex-1 inline-flex items-center justify-center h-10 text-sm font-medium leading-none text-center">
+        {{ "product_list.apply" | t }}
+      </button>
+    </div>
+  </aside>
+
+  <div data-mobile-sort-overlay class="hidden fixed inset-x-0 bottom-0 bg-black/30 z-40" style="top: var(--announcement-bar-height, 0px);" aria-hidden="true"></div>
+  <aside id="mobile-sort-panel" data-mobile-sort-panel role="dialog" aria-modal="true" aria-labelledby="mobile-sort-panel-title" aria-hidden="true" tabindex="-1" style="top: var(--announcement-bar-height, 0px); height: calc(100% - var(--announcement-bar-height, 0px));" class="fixed left-0 w-full sm:w-[84%] sm:max-w-[420px] z-50 transform -translate-x-full transition-transform duration-300 overflow-y-auto bg-white">
+    <div class="px-5 py-4 flex items-center justify-between border-b" style="border-color: var(--color-border);">
+      <h3 id="mobile-sort-panel-title" class="text-lg font-semibold" style="color: var(--color-primary);">{{ "product_list.sort_by" | t }}</h3>
+      <button type="button" data-mobile-sort-close aria-label="{{ 'product_list.close_filters' | t | default: 'Close' }}" style="color: var(--color-primary);">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <path d="M4 4L16 16M16 4L4 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <ul role="menu" aria-labelledby="mobile-sort-panel-title" class="px-5 py-2">
+      {% for option in sort_object.options %}
+        {% assign is_selected_sort = false %}
+        {% if sort_object.selected_option and sort_object.selected_option.value == option.value %}
+          {% assign is_selected_sort = true %}
+        {% elsif sort_object.selected_option == blank and forloop.first %}
+          {% assign is_selected_sort = true %}
+        {% endif %}
+        <li role="none">
+          <button
+            type="button"
+            role="menuitemradio"
+            aria-checked="{% if is_selected_sort %}true{% else %}false{% endif %}"
+            data-sort-option
+            data-mobile-sort-option
+            value="{{ option.value }}"
+            class="w-full text-left py-4 text-base body-text-color transition-colors duration-200"
+            style="font-weight: {% if is_selected_sort %}600{% else %}400{% endif %};">
+            {{ option.name | escape }}
+          </button>
+        </li>
+      {% endfor %}
+    </ul>
+  </aside>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.product_list.name",
+  "tag": "section",
+  "class": "section",
+  "available_in": { "templates": ["category"] },
+  "settings": [
+    {
+      "type": "text",
+      "id": "page_type",
+      "label": "t:sections.product_list.settings.page_type.label",
+      "default": "category"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "t:sections.product_list.settings.heading_alignment.label",
+      "options": [
+        { "label": "t:sections.product_list.settings.heading_alignment.options.left", "value": "left" },
+        { "label": "t:sections.product_list.settings.heading_alignment.options.center", "value": "center" }
+      ],
+      "default": { "display_name": "Left", "value": "left" }
+    },
+    {
+      "type": "select",
+      "id": "desktop_columns",
+      "label": "t:sections.product_list.settings.desktop_columns.label",
+      "options": [
+        { "label": "t:sections.product_list.settings.desktop_columns.options.two", "value": "2" },
+        { "label": "t:sections.product_list.settings.desktop_columns.options.three", "value": "3" },
+        { "label": "t:sections.product_list.settings.desktop_columns.options.four", "value": "4" }
+      ],
+      "default": { "display_name": "3 columns", "value": "3" }
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "label": "t:sections.product_list.settings.show_secondary_image.label",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.product_list.settings.section_padding.mobile",
+      "meta": "mobile"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 30,
+      "label": "t:sections.product_list.settings.section_padding.top.label",
+      "meta": "mobile"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 30,
+      "label": "t:sections.product_list.settings.section_padding.bottom.label",
+      "meta": "mobile"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.product_list.settings.section_padding.desktop",
+      "meta": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 30,
+      "label": "t:sections.product_list.settings.section_padding.top.label",
+      "meta": "desktop"
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 30,
+      "label": "t:sections.product_list.settings.section_padding.bottom.label",
+      "meta": "desktop"
+    }
+  ],
+  "presets": [{ "name": "t:sections.product_list.presets.default.name" }]
+}
+{% endschema %}
